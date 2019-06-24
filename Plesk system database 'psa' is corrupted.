@@ -1,0 +1,21 @@
+Resolution
+
+For Plesk on Linux
+Connect to the Plesk server via SSH.
+
+Switch to the directory with daily dumps:
+
+# cd /var/lib/psa/dumps
+
+List all available Plesk daily dumps:
+
+# ls -l mysql.daily*
+-rw------- 1 root root 236253 Feb 3 01:51 mysql.daily.dump.0.gz
+-rw------- 1 root root 229653 Feb 2 01:48 mysql.daily.dump.1.gz
+-rw------- 1 root root 222485 Feb 1 01:56 mysql.daily.dump.2.gz
+
+where mysql.daily.dump.0.gz is the most recent daily dump.
+
+Restore the 'psa' database from the most recent daily dump. In this example, the 'psa' database is restored from mysql.daily.dump.0.gz:
+
+# zcat mysql.daily.dump.0.gz | sed -n '/-- Current Database: `psa`/,/-- Current Database:*/p' | MYSQL_PWD=`cat /etc/psa/.psa.shadow` mysql -uadmin
