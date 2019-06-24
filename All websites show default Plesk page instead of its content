@@ -1,0 +1,33 @@
+Solution > 
+Symptoms
+All websites show default Plesk page instead of its content.
+The following directories are empty or symlinks to domains httpd.conf missing for affected websites:
+# ls -la /etc/httpd/conf/plesk.conf.d/forwarding 
+drwxr-xr-x 2 root root 4096 . 
+drwxr-xr-x 7 root root 4096 ..
+
+# ls -la /etc/httpd/conf/plesk.conf.d/ip_default 
+drwxr-xr-x 2 root root 4096 . 
+drwxr-xr-x 7 root root 4096 ..
+
+# ls -la /etc/httpd/conf/plesk.conf.d/vhosts 
+drwxr-xr-x 2 root root 4096 . 
+drwxr-xr-x 7 root root 4096 ..
+
+# ls -la /etc/httpd/conf/plesk.conf.d/wildcards 
+drwxr-xr-x 2 root root 4096 . 
+drwxr-xr-x 7 root root 4096 ..
+
+Cause
+
+Missing symbolic links in Apache configuration directories.
+
+Resolution
+Connect to the server using SSH.
+Rebuild web server configuration files using Plesk httpdmng utility:
+# plesk bin domain -l > dom.list
+# cat dom.list | while read i; do plesk sbin httpdmng --reconfigure-domain $i ; echo "$i - success"; done
+
+
+# plesk bin domain -l > domain.txt
+# cat domain.txt | while read i; do plesk sbin httpdmng --reconfigure-domain $i ; echo "$i - resolve"; done
