@@ -1,0 +1,24 @@
+Solution=>
+Increase the 'ExecTimeLimit'  value:
+
+Linux:
+
+Login to the server over SSH.
+Create the file config.inc.php at /usr/local/psa/admin/htdocs/domains/databases/phpMyAdmin/libraries/ copying the content of config.default.php file:
+
+# cp -p /usr/local/psa/admin/htdocs/domains/databases/phpMyAdmin/libraries/config.default.php /usr/local/psa/admin/htdocs/domains/databases/phpMyAdmin/libraries/config.inc.php
+
+Increase the value of $cfg['ExecTimeLimit'] in /usr/local/psa/admin/htdocs/domains/databases/phpMyAdmin/libraries/config.inc.php:
+
+$cfg['ExecTimeLimit'] = 3600;
+
+Increase the settings in /etc/sw-cp-server/config to avoid '504 Gateway Timeout' error:
+
+fastcgi_read_timeout 3600; 
+fastcgi_send_timeout 3600;
+
+Restart sw-cp-server:
+
+# service sw-cp-server restart
+
+====================================================================================================================================
