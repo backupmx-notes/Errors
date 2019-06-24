@@ -1,0 +1,17 @@
+This is what I did to address the issue:
+
+Edited file: /opt/cpanel/ea-php##/root/etc/php-fpm.d/domain.com.conf
+Added: 
+Code:
+request_terminate_timeout = 30s
+In WHM »Service Configuration »Apache Configuration »Include Editor » Pre VirtualHost Include
+
+(I chose all versions of apache)
+
+I added:
+
+Code:
+<IfModule proxy_fcgi_module>
+timeout 30
+</IfModule>
+This will fix the issue
